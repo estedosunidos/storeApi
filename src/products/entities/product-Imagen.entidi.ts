@@ -5,15 +5,16 @@ import { Product } from "./product.entity";
 export class ProductImage{
     @PrimaryGeneratedColumn()
     id:number
-    @Column('text')
+    @Column()
     url:string
 
  
     @ManyToOne(
-        ()=> Product,
+         ()=> Product,
         (product)=>product.images,
+    {onDelete:'CASCADE'}
         
-    )
+     )
     product:Product
 
 }

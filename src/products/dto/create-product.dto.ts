@@ -1,47 +1,62 @@
-import { Type } from "class-transformer"
-import { IS_ALPHA, IsArray, IsIn, IsInt, IsNumber, IsOptional, IsPositive, IsString, MinLength, ValidateNested } from "class-validator"
-import { CreateProductImageDto } from "./createProductImageDto.dto"
+import { ApiProperty } from '@nestjs/swagger';
+import { IsArray, IsIn, IsInt, IsNumber, IsOptional, 
+  IsPositive, IsString, MinLength 
+} from 'class-validator';
+
 
 export class CreateProductDto {
-    @IsString()
-    @MinLength(1)
-    title:string
+@ApiProperty({
+  description:'product title (unique)',
+  nullable:false,
+  minLength:1
+})
+@IsString()
+@MinLength(1)
+title: string;
 
-    @IsNumber()
-    @IsPositive()
-    @IsOptional()
-    price?: number
-    
-    @IsString()
-    @IsOptional()
-    description:string
+@ApiProperty()
+@IsNumber()
+@IsPositive()
+@IsOptional()
+price?: number;
 
-    @IsString()
-    @IsOptional()
-    slug?:string
+@ApiProperty()
+@IsString()
+@IsOptional()
+description?: string;
 
-    @IsInt()
-    @IsPositive()
-    @IsOptional()
-    stock?:number
+@ApiProperty()
+@IsString()
+@IsOptional()
+slug?: string;
 
-    @IsString({each:true})
-    @IsArray()
-    size:string[]
+@ApiProperty()
+@IsInt()
+@IsPositive()
+@IsOptional()
+stock?: number; 
 
-    @IsIn(['men','women','kid'])
-    gender:string
-    
-    @IsString({each:true})
-    @IsArray()
-    @IsOptional()
-    tags:string []
+@ApiProperty()
+@IsString({ each: true })
+@IsArray()
+sizes: string[]
 
-    @IsArray()
-  @ValidateNested({ each: true })
-  @Type(() => CreateProductImageDto)
-  images: CreateProductImageDto[];
+@ApiProperty()
+@IsIn(['men','women','kid','unisex'])
+gender: string;
 
+@ApiProperty()
+@IsString({ each: true })
+@IsArray()
+@IsOptional()
+tags: string[];
+
+
+@ApiProperty()
+@IsString({ each: true })
+@IsArray()
+@IsOptional()
+images?: string[];
 
 
 }

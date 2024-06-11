@@ -6,10 +6,17 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ProductsModule } from './products/products.module';
 
-import { UsuarioModule } from './usuario/usuario.module';
+
 import { CommonModule } from './common/common.module';
+import { SeedModule } from './seed/seed.module';
+import { FilestoreModule } from './filestore/filestore.module';
+
+import { join } from 'path';
+import { AuthModule } from './auth/auth.module';
+
+import { ProductsModule } from './products/products.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
 
 @Module({
   imports: [ConfigModule.forRoot(),TypeOrmModule.forRoot({
@@ -22,7 +29,9 @@ import { CommonModule } from './common/common.module';
     autoLoadEntities:true,
     entities: [__dirname + '/**/*.entity{.ts,.js}'],
     synchronize: true,
-  }), ProductsModule,CommonModule, UsuarioModule],
+  }),     ServeStaticModule.forRoot({
+    rootPath: join(__dirname,'..','public'), 
+  }),ProductsModule,CommonModule,FilestoreModule, AuthModule,SeedModule],
   controllers: [AppController],
   providers: [AppService],
 })
